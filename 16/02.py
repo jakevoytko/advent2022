@@ -100,10 +100,14 @@ while True:
 sortedStates = list(allStates.values())
 sortedStates.sort(key = lambda a: a.totalFlow, reverse=True)
 maxFlow = 0
-for personState in sortedStates:
+for i in range(len(sortedStates)):
+  personState = sortedStates[i]
+  if personState.totalFlow * 2 < maxFlow:
+    break
   # Just in case the optimal value is done by one person
   maxFlow = max(maxFlow, personState.totalFlow)
-  for elephantState in sortedStates:
+  for j in range(i + 1, len(sortedStates)):
+    elephantState = sortedStates[j]
     if len(personState.alreadyVisited.intersection(elephantState.alreadyVisited)) > 0:
       continue
     maxFlow = max(maxFlow, personState.totalFlow + elephantState.totalFlow)
